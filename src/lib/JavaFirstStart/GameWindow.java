@@ -1,4 +1,4 @@
-package library;
+package lib.JavaFirstStart;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,9 +20,9 @@ public class GameWindow extends JFrame {
 
 
     public static void start() throws IOException {
-        bg = ImageIO.read(GameWindow.class.getResourceAsStream("library/GameWindowRe/drop.png"));
-        go = ImageIO.read(GameWindow.class.getResourceAsStream("library/GameWindowRe/game_over.png"));
-        d= ImageIO.read(GameWindow.class.getResourceAsStream("library/GameWindowRe/drop.png"));
+        bg = ImageIO.read(GameWindow.class.getResourceAsStream("lib/GameWindowRe/drop.png"));
+        go = ImageIO.read(GameWindow.class.getResourceAsStream("lib/GameWindowRe/game_over.png"));
+        d= ImageIO.read(GameWindow.class.getResourceAsStream("lib/GameWindowRe/drop.png"));
         gw = new GameWindow();
         gw.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gw.setLocation(200,100);

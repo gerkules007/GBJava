@@ -1,6 +1,6 @@
-package library;
+package lib.GuessTheNumber;
 
-import controller.Input;
+import controller.io.Input;
 
 public class GuessTheNumber {
     int gn;
@@ -21,7 +21,7 @@ public class GuessTheNumber {
     private void mainGame() {
         while(attempts >= 1) {
             System.out.printf("У вас осталось %d попыток\n", attempts--);
-            inputN = Input.inputNumber("Введите число:");
+            inputN = Input.takeIntegerNumber("Введите число:");
             if (inputN < gn) {
                 System.out.println("Число меньше загаданного");
             } else if (inputN > gn) {
