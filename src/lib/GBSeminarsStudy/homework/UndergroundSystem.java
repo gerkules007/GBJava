@@ -1,13 +1,14 @@
 package lib.GBSeminarsStudy.homework;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-class UndergroundSystem {
+
+public class UndergroundSystem {
     private Map<Integer, Passenger> passengers;
-    private Map<String, List<Integer>> travelPlaces;
+    private Map<String, Travel> travelPlaces;
 
     public UndergroundSystem() {
         passengers = new HashMap<>();
@@ -21,38 +22,56 @@ class UndergroundSystem {
     public void checkOut(int id, String stationNameOut, int endTime) {
         Passenger currentPassenger = passengers.get(id);
         String stationKey = currentPassenger.getStationName() + "-" + stationNameOut;
-        travelPlaces.getOrDefault( stationKey,
-                                   travelPlaces.putIfAbsent(stationKey, new ArrayList<>()) )
-                    .add(endTime-currentPassenger.getTime());
+        travelPlaces.putIfAbsent(stationKey, new Travel());
+        travelPlaces.get(stationKey)
+                    .appendTravelTime(endTime-currentPassenger.getTime());
     }
 
     public double getAverageTime(String startStation, String endStation) {
         String stationKey = startStation + "-" + endStation;
-        return getAverageTime(travelPlaces.get(stationKey));
+        Travel route = travelPlaces.get(stationKey);
+        return (double) route.getTravelSum() / route.getTravelCount();
+    }
+}
+class Passenger {
+    private final String stationName;
+    private final int startTime;
+
+    public Passenger(String stationName, int t) {
+        this.stationName = stationName;
+        startTime = t;
     }
 
-    public double getAverageTime(List<Integer> passengerTime) {
-        int sum = 0;
-        for (int time : passengerTime) {
-            sum += time;
-        }
-        return ((double) sum / passengerTime.size());
+    public String getStationName() {
+        return stationName;
     }
-    class Passenger {
-        private String stationName;
-        private int startTime;
 
-        public Passenger(String stationName, int t) {
-            this.stationName = stationName;
-            startTime = t;
-        }
+    public int getTime() {
+        return startTime;
+    }
+}
+class Travel {
+    //        private List<Integer> travelTimeData;
+    private int sum;
+    private int count;
 
-        public String getStationName() {
-            return stationName;
-        }
+    public Travel() {
+//            this.travelTimeData = new ArrayList<>();
+        this.sum = 0;
+        this.count = 0;
+    }
 
-        public int getTime() {
-            return startTime;
-        }
+    public int getTravelSum() {
+        return sum;
+    }
+
+    public int getTravelCount() {
+        return count;
+    }
+
+    public void appendTravelTime(int time) {
+//            travelTimeData.add(time);
+        sum += time;
+        count++;
     }
 }
